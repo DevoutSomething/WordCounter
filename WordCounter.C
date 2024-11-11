@@ -4,6 +4,7 @@
 #include <ctype.h>
 #define MAX_WORD_LENGTH 50
 #define MAX_WORD_COUNT 1000
+#define MAX_PATH_LENGTH 255
 
 struct Word{ 
     char word[MAX_WORD_LENGTH];
@@ -24,8 +25,13 @@ void addOrIncrementWord(struct WordList* list, char* word);
 
 
 int main() {
+    char filePath[MAX_PATH_LENGTH];
+    printf("please enter a valid file relative file path:");
+    if(fgets(filePath, sizeof(filePath), stdin)){
+            filePath[strcspn(filePath, "\n")] = '\0';
+    }
     struct WordList *return_list= createWordList(MAX_WORD_COUNT);
-    FILE *pF = fopen("words.txt", "r");
+    FILE *pF = fopen(filePath, "r");
 
     if(pF == NULL){
         printf("Unable to open file!\n");
